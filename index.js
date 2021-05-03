@@ -246,14 +246,13 @@ class DiscordXp {
   */
 
 
-  static async fetchLeaderboard(guildId, limit) {
+  static async fetchLeaderboard(guildId) {
     if (!guildId) throw new TypeError("A guild id was not provided.");
-    if (!limit) throw new TypeError("A limit was not provided.");
 
-    var users = await levels.find({ guildID: guildId })
+    var users = await levels.find({ guildID: guildId });
     users = users.sort((a, b) => b.xp - a.xp);
 
-    return users.slice(0, limit);
+    return users;
   }
 
   /**
