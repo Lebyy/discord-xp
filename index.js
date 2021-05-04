@@ -160,6 +160,28 @@ class DiscordXp {
 
     return user;
   }
+  
+  /**
+  * @param {string} [userId] - Discord user id.
+  * @param {string} [guildId] - Discord guild id.
+  * @param {number} [boost] - The boost to set.
+  */
+
+  static async setBoost(userId, guildId, boost) {
+    if (!userId) throw new TypeError("An user id was not provided.");
+    if (!guildId) throw new TypeError("A guild id was not provided.");
+    if (!boost) throw new TypeError("A boost amount was not provided.");
+
+    const user = await levels.findOne({ userID: userId, guildID: guildId });
+    if (!user) return false;
+
+    user.boost = boost;
+    user.lastUpdated = new Date();
+    
+    user.save().catch(e => console.log(`Failed to set level: ${e}`) );
+
+    return user;
+  }
 
   /**
   * @param {string} [userId] - Discord user id.
